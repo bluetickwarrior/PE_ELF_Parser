@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Metadata Extractor</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>File Metadata Extractor</h1>
+    <form id="uploadForm">
+        <select id="fileType" required>
+            <option value="pe">PE</option>
+            <option value="elf">ELF</option>
+        </select>
+        <input type="file" id="fileInput" required>
+        <button type="submit">Extract Metadata</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>
