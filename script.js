@@ -4,8 +4,8 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     const fileType = document.getElementById('fileType').value;
     
     // Check if the selected file type is valid
-    if (fileType !== 'pe' && fileType !== 'elf') {
-        document.getElementById('result').innerHTML = '<p>Error: Invalid file type selected. Please choose PE or ELF.</p>';
+    if (fileType !== 'pe' && fileType !== 'elf' && fileType !== 'macho') {
+        document.getElementById('result').innerHTML = '<p>Error: Invalid file type selected. Please choose PE, ELF, or Mach-O.</p>';
         return;
     }
 
