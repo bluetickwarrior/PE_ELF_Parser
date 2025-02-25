@@ -7,11 +7,12 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>PE/ELF File Metadata Extractor</h1>
+    <h1>File Metadata Extractor</h1>
     <form id="uploadForm">
         <select id="fileType" required>
             <option value="pe">PE</option>
             <option value="elf">ELF</option>
+            <option value="macho">Mach-O</option>
         </select>
         <input type="file" id="fileInput" required>
         <button type="submit">Extract Metadata</button>
