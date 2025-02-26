@@ -12,23 +12,34 @@
         }
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://wallpapers.com/images/high/wednesday-frog-meme-4yzyieh2wdm48bcl.png'); /* Replace 'burrito.jpg' with your actual image URL */
-            background-size: cover; /* Ensures the image covers the entire screen */
-            background-position: center; /* Centers the image */
-            background-attachment: fixed; /* Keeps the image fixed while scrolling */
-            background-repeat: no-repeat; /* Prevents the image from repeating */
             color: #ecf0f1;
             line-height: 1.6;
             padding: 20px;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://wallpapers.com/images/high/wednesday-frog-meme-4yzyieh2wdm48bcl.png'); /* Replace with your actual image URL */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: brightness(50%) contrast(110%);
+            z-index: -1;
         }
         h1 {
             text-align: center;
             color: #3498db;
         }
-        form {
-            background-color: rgba(52, 73, 94, 0.8); /* Semi-transparent to show the background */
+        form, #result {
+            background-color: rgba(52, 73, 94, 0.6);
+            backdrop-filter: blur(5px);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -55,32 +66,3 @@
         button {
             background-color: #3498db;
             color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        #result {
-            background-color: rgba(52, 73, 94, 0.8); /* Semi-transparent to show the background */
-            padding: 20px;
-            border-radius: 8px;
-            white-space: pre-wrap;
-        }
-    </style>
-</head>
-<body>
-    <h1>File Metadata Extractor</h1>
-    <form id="uploadForm">
-        <select id="fileType" required>
-            <option value="pe">PE</option>
-            <option value="elf">ELF</option>
-            <option value="macho">Mach-O</option>
-        </select>
-        <input type="file" id="fileInput" required>
-        <input type="password" id="passwordInput" placeholder="Enter password (optional)">
-        <button type="submit">Extract Metadata</button>
-    </form>
-    <div id="result"></div>
-</body>
-</html>
