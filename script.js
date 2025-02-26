@@ -2,6 +2,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const file = document.getElementById('fileInput').files[0];
     const fileType = document.getElementById('fileType').value;
+    const password = document.getElementById('passwordInput').value;
     
     // Check if the selected file type is valid
     if (fileType !== 'pe' && fileType !== 'elf' && fileType !== 'macho') {
@@ -12,6 +13,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('type', fileType);
+    formData.append('password', password);
 
     try {
         const response = await fetch('https://y39ouvotwl.execute-api.us-east-1.amazonaws.com/prod', {
