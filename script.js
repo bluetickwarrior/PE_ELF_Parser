@@ -13,7 +13,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('type', fileType);
-    formData.append('password', password);
+    formData.append('password', password || 'defaultPassword');
 
     try {
         const response = await fetch('https://y39ouvotwl.execute-api.us-east-1.amazonaws.com/prod', {
