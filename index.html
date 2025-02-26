@@ -66,3 +66,29 @@
         button {
             background-color: #3498db;
             color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Metadata Extractor</h1>
+    <form id="uploadForm">
+        <select id="fileType" required>
+            <option value="pe">PE</option>
+            <option value="elf">ELF</option>
+            <option value="macho">Mach-O</option>
+        </select>
+        <input type="file" id="fileInput" required>
+        <input type="password" id="passwordInput" placeholder="Enter password (optional)">
+        <button type="submit">Extract Metadata</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>
