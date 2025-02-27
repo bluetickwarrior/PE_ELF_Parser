@@ -6,7 +6,69 @@
     <title>PE/ELF/Mach-O File Metadata Extractor</title>
     <script src="script.js" defer></script>
     <style>
-        /* ... (keep all existing styles) ... */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            color: #ecf0f1;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            background-image: url('https://i.imgur.com/C9LPmUl.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for better text readability */
+            z-index: -1;
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        form, #result {
+            background-color: rgba(52, 73, 94, 0.2); /* Very low opacity */
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: rgba(236, 240, 241, 0.8);
+            color: #2c3e50;
+        }
+        button {
+            background-color: rgba(52, 152, 219, 0.8);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: rgba(41, 128, 185, 0.9);
+        }
+        #result {
+            white-space: pre-wrap;
+            color: #ecf0f1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
         .input-type-selector {
             display: flex;
             justify-content: space-around;
