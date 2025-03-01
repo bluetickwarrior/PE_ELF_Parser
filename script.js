@@ -68,21 +68,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Parse the JSON part
             const data = JSON.parse(jsonPart);
-            // Prepare the result HTML
-            let resultHTML = '<h2>Metadata:</h2>';
-            resultHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            // Prepare the metadata HTML
+            let metadataHTML = '<h2>Metadata:</h2>';
+            metadataHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
 
-            // Add non-JSON part if it exists
+            // Prepare the capa analysis HTML
+            let capaHTML = '<h2>capa analysis:</h2>';
             if (nonJsonPart && nonJsonPart.trim()) {
-                resultHTML += '<h2>capa analysis:</h2>';
-                resultHTML += '<pre>' + nonJsonPart.trim() + '</pre>';
+                capaHTML += '<pre>' + nonJsonPart.trim() + '</pre>';
+            } else {
+                capaHTML += '<p>No capa analysis available.</p>';
             }
             
             //const data = await response.json();
-            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('metadata-result').innerHTML = metadataHTML;
+            document.getElementById('capa-result').innerHTML = capaHTML;
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
+            document.getElementById('metadata-result').innerHTML = `<p>Error: ${error.message}</p>`;
+            document.getElementById('capa-result').innerHTML = '';
         }
     });
 });
