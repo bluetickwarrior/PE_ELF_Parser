@@ -83,10 +83,16 @@ document.addEventListener('DOMContentLoaded', function() {
             //const data = await response.json();
             document.getElementById('metadata-result').innerHTML = metadataHTML;
             document.getElementById('capa-result').innerHTML = capaHTML;
+			// Show the result container
+			document.getElementById('result-container').style.display = 'flex';
+			
         } catch (error) {
             console.error('Error:', error);
             document.getElementById('metadata-result').innerHTML = `<p>Error: ${error.message}</p>`;
             document.getElementById('capa-result').innerHTML = '';
+			
+			// Show the result container even in case of error
+			document.getElementById('result-container').style.display = 'flex';
         }
     });
 });
