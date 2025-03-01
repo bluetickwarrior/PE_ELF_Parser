@@ -61,14 +61,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            document.getElementById('result').innerHTML = `
-                <h2>Metadata:</h2>
-                <pre>${JSON.stringify(data, null, 2)}</pre>
-            `;
+            const text = await response.text();
+            
+            // Split the response using the '|||' delimiter
+            const [jsonPart, nonJsonPart] = text.split('|||');
+
+            // Parse the JSON part
+            const data = JSON.parse(jsonPart);
+            // Prepare the result HTML
+            let resultHTML = '<h2>Metadata:</h2>';
+            resultHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+
+            // Add non-JSON part if it exists
+            if (nonJsonPart && nonJsonPart.trim()) {
+                resultHTML += '<h2>capa analysis:</h2>';
+                resultHTML += '<pre>' + nonJsonPart.trim() + '</pre>';
+            }
+            
+            //const data = await response.json();
+            document.getElementById('result').innerHTML = resultHTML;
         } catch (error) {
             console.error('Error:', error);
             document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
         }
     });
 });
+
+            
+            //document.getElementById('result').innerHTML = `
+                //<h2>Metadata:</h2>
+                //<pre>${JSON.stringify(data, null, 2)}</pre>
+            //`;
+        //} catch (error) {
+            //console.error('Error:', error);
+            //document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
+        //}
+    //});
+//});
