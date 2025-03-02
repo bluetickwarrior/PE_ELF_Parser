@@ -20,6 +20,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+
+	const loading = document.getElementById('loading');
+	function showLoading() {
+        loading.style.display = 'block';
+    }
+
+    function hideLoading() {
+        loading.style.display = 'none';
+    }
+
+
     document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const fileType = document.getElementById('fileType').value;
@@ -27,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputType = document.querySelector('input[name="inputType"]:checked').value;
         
         if (fileType !== 'pe' && fileType !== 'elf' && fileType !== 'macho') {
-            document.getElementById('result').innerHTML = '<p>Error: Invalid file type selected. Please choose PE, ELF, or Mach-O.</p>';
+            document.getElementById('metadata-result').innerHTML = '<p>Error: Invalid file type selected. Please choose PE, ELF, or Mach-O.</p>';
             return;
         }
 
@@ -38,18 +49,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (inputType === 'file') {
             const file = fileInput.files[0];
             if (!file) {
-                document.getElementById('result').innerHTML = '<p>Error: Please select a file to upload.</p>';
+                document.getElementById('metadata-result').innerHTML = '<p>Error: Please select a file to upload.</p>';
+				document.getElementById('capa-result').innerHTML = '';
+				document.getElementById('result-container').style.display = 'flex';
                 return;
             }
             formData.append('file', file);
         } else {
             const base64Content = base64Input.value.trim();
             if (!base64Content) {
-                document.getElementById('result').innerHTML = '<p>Error: Please paste the base64-encoded file contents.</p>';
+                document.getElementById('metadata-result').innerHTML = '<p>Error: Please paste the base64-encoded file contents.</p>';
+				document.getElementById('capa-result').innerHTML = '';
+				document.getElementById('result-container').style.display = 'flex';
                 return;
             }
             formData.append('base64', base64Content);
         }
+
+		showLoading(); // Show loading animation before making the request
 
         try {
             const response = await fetch('https://y39ouvotwl.execute-api.us-east-1.amazonaws.com/prod', {
@@ -93,6 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			
 			// Show the result container even in case of error
 			document.getElementById('result-container').style.display = 'flex';
+		} finally {
+            hideLoading(); // Hide loading animation
+			
         }
     });
 });
