@@ -68,10 +68,20 @@
         button:hover {
             background-color: rgba(41, 128, 185, 0.9);
         }
-		#uploadForm {
-		max-width: 800px;
-		margin: 0 auto;
-		}
+	#fileInput, #passwordInput {
+    	    width: auto;
+    	    display: inline-block;
+	}
+
+	button[type="submit"] {
+    	    display: block;
+    	    width: auto;
+	}
+	#uploadForm {
+	    text-align: left;
+	    max-width: fit-content;
+	    margin: 0 auto;
+	}
         #result-container {
             display: none;
             justify-content: space-between;
