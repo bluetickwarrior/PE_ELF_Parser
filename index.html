@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PE/ELF/Mach-O File Metadata Extractor</title>
-    <script src="script.js?v=1.0.1" defer></script>
+    <script src="script.js" defer></script>
     <style>
         html, body {
             height: 100%;
@@ -97,6 +97,52 @@
         .input-type-selector label {
             cursor: pointer;
         }
+		.loader {
+			position: relative;
+			width: 50px;
+			height: 50px;
+			margin: 20px auto;
+			display: none;
+		}
+
+		.loader::before {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			border: 5px solid #f3f3f3;
+			border-top: 5px solid #3498db;
+			animation: spin 1s linear infinite;
+		}
+
+		.loader::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background-color: #3498db;
+			animation: pulse 1s ease-in-out infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: translate(-50%, -50%) rotate(0deg); }
+			100% { transform: translate(-50%, -50%) rotate(360deg); }
+		}
+
+		@keyframes pulse {
+			0% { transform: translate(-50%, -50%) scale(1); }
+			50% { transform: translate(-50%, -50%) scale(1.2); }
+			100% { transform: translate(-50%, -50%) scale(1); }
+		}
+
     </style>
 </head>
 <body>
@@ -120,6 +166,7 @@
         <input type="password" id="passwordInput" placeholder="Enter password (optional)">
         <button type="submit">Extract Metadata</button>
     </form>
+	<div id="loading" class="loader"></div>
     <div id="result-container">
         <div id="metadata-result"></div>
         <div id="capa-result"></div>
