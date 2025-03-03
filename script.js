@@ -20,9 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-
-	const loading = document.getElementById('loading');
-	function showLoading() {
+    const loading = document.getElementById('loading');
+    function showLoading() {
         loading.style.display = 'block';
     }
 
@@ -30,6 +29,22 @@ document.addEventListener('DOMContentLoaded', function() {
         loading.style.display = 'none';
     }
 
+    async function readFileHeader(file) {
+        const slice = file.slice(0, 2);
+        const reader = new FileReader();
+        return new Promise((resolve) => {
+            reader.onload = (e) => {
+                const header = e.target.result;
+                resolve(header);
+            };
+            reader.readAsText(slice);
+        });
+    }
+
+    async function removeFileHeader(file) {
+        const modifiedContent = file.slice(2);
+        return new File([modifiedContent], file.name, { type: file.type });
+    }
 
     document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -47,26 +62,33 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('password', password);
 
         if (inputType === 'file') {
-            const file = fileInput.files[0];
+            let file = fileInput.files[0];
             if (!file) {
                 document.getElementById('metadata-result').innerHTML = '<p>Error: Please select a file to upload.</p>';
-				document.getElementById('capa-result').innerHTML = '';
-				document.getElementById('result-container').style.display = 'flex';
+                document.getElementById('capa-result').innerHTML = '';
+                document.getElementById('result-container').style.display = 'flex';
                 return;
             }
+
+            // Check if the file is a ZIP or 7z archive
+            const fileHeader = await readFileHeader(file);
+            if (fileHeader === 'PK' || fileHeader === '7z') {
+                file = await removeFileHeader(file);
+            }
+
             formData.append('file', file);
         } else {
             const base64Content = base64Input.value.trim();
             if (!base64Content) {
                 document.getElementById('metadata-result').innerHTML = '<p>Error: Please paste the base64-encoded file contents.</p>';
-				document.getElementById('capa-result').innerHTML = '';
-				document.getElementById('result-container').style.display = 'flex';
+                document.getElementById('capa-result').innerHTML = '';
+                document.getElementById('result-container').style.display = 'flex';
                 return;
             }
             formData.append('base64', base64Content);
         }
 
-		showLoading(); // Show loading animation before making the request
+        showLoading(); // Show loading animation before making the request
 
         try {
             const response = await fetch('https://y39ouvotwl.execute-api.us-east-1.amazonaws.com/prod', {
@@ -97,34 +119,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 capaHTML += '<p>No capa analysis available.</p>';
             }
             
-            //const data = await response.json();
             document.getElementById('metadata-result').innerHTML = metadataHTML;
             document.getElementById('capa-result').innerHTML = capaHTML;
-			// Show the result container
-			document.getElementById('result-container').style.display = 'flex';
-			
+            // Show the result container
+            document.getElementById('result-container').style.display = 'flex';
+            
         } catch (error) {
             console.error('Error:', error);
             document.getElementById('metadata-result').innerHTML = `<p>Error: ${error.message}</p>`;
             document.getElementById('capa-result').innerHTML = '';
-			
-			// Show the result container even in case of error
-			document.getElementById('result-container').style.display = 'flex';
-		} finally {
+            
+            // Show the result container even in case of error
+            document.getElementById('result-container').style.display = 'flex';
+        } finally {
             hideLoading(); // Hide loading animation
-			
         }
     });
 });
-
-            
-            //document.getElementById('result').innerHTML = `
-                //<h2>Metadata:</h2>
-                //<pre>${JSON.stringify(data, null, 2)}</pre>
-            //`;
-        //} catch (error) {
-            //console.error('Error:', error);
-            //document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
-        //}
-    //});
-//});
